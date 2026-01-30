@@ -3,7 +3,7 @@ import Image from "next/image";
 import UserDropdown from "@/components/UserDropdown";
 import NaveItems from "@/components/NaveItems";
 
-const Header = async () => {
+const Header = async ({ user }: { user: User }) => {
 
     return (
         <header className="sticky top-0 header">
@@ -15,7 +15,7 @@ const Header = async () => {
                     <NaveItems />
                 </nav>
 
-                <UserDropdown />
+                <UserDropdown user={user}/>
             </div>
         </header>
     )

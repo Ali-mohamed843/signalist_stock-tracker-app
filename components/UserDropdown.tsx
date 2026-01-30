@@ -12,16 +12,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import NaveItems from "@/components/NaveItems";
+import {signOut} from "@/lib/actions/auth.actions";
 
 
-const UserDropdown = () => {
+const UserDropdown = ({ user, initialStocks }: {user: User, initialStocks: StockWithWatchlistStatus[]}) => {
     const router = useRouter();
 
     const handleSignOut = async () => {
+        await signOut();
         router.push("/sign-in");
     }
-
-    const user = {name: 'ali', email: 'ali@gmail.com'};
 
     return (
         <DropdownMenu>
