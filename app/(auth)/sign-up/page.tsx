@@ -7,7 +7,9 @@ import SelectField from "@/components/forms/SelectField";
 import {INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS} from "@/lib/constants";
 import {CountrySelectField} from "@/components/forms/CountrySelectField";
 import FooterLink from "@/components/forms/FooterLink";
+import {signUpWithEmail} from "@/lib/actions/auth.actions";
 import {useRouter} from "next/navigation";
+import {toast} from "sonner";
 
 const SignUp = () => {
     const router = useRouter()
@@ -29,12 +31,23 @@ const SignUp = () => {
         mode: 'onBlur'
     }, );
 
+    const onSubmit = async (data: SignUpFormData) => {
+        try {
+            const result = await signUpWithEmail(data);
+            if(result.success) router.push('/');
+        } catch (e) {
+            console.error(e);
+            toast.error('Sign up failed', {
+                description: e instanceof Error ? e.message : 'Failed to create an account.'
+            })
+        }
+    }
 
     return (
         <>
             <h1 className="form-title">Sign Up & Personalize</h1>
 
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <InputField
                     name="fullName"
                     label="Full Name"
